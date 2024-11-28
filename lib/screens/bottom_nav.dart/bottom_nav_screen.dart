@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/consts/app_colors.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/tabs/browse_screen.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/tabs/home_screen.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/tabs/search_screen.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/tabs/watchList_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/tabs/browse_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/tabs/home_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/tabs/search_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/tabs/watchList_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});

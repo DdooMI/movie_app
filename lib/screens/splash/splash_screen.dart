@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/consts/app_Images.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/bottom_nav_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/bottom_nav_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

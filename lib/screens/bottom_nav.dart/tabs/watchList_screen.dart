@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/watchList_widgets/watch_card.dart';
+import 'package:movie_app/screens/bottom_nav.dart/watchList_widgets/watch_card.dart';
 
 class WatchlistScreen extends StatelessWidget {
   const WatchlistScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/splash/bottom_nav.dart/browse_widgets.dart/browse_card.dart';
+import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_card.dart';
 
 class BrowseScreen extends StatelessWidget {
   const BrowseScreen({super.key});
