@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/consts/app_theme.dart';
 import 'package:movie_app/screens/bottom_nav.dart/bottom_nav_screen.dart';
-import 'package:movie_app/screens/bottom_nav.dart/home_widgets/movie_details_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_genres_screen.dart';
+import 'package:movie_app/screens/splash/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -14,9 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {BottomNavScreen.routeName: (_) => const BottomNavScreen()},
+      routes: {
+        BottomNavScreen.routeName: (_) => const BottomNavScreen(),
+        BrowseGenresScreen.routeName: (_) => const BrowseGenresScreen()
+      },
       theme: AppTheme.theme,
-      home: const MovieDetailsScreen(),
+      home: const SplashScreen(),
     );
   }
 }

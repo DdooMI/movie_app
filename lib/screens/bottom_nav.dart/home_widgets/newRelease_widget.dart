@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/api/api_consts.dart';
 
 class NewreleaseWidget extends StatelessWidget {
-  const NewreleaseWidget({super.key});
+  const NewreleaseWidget({super.key, required this.poster});
 
+  final String? poster;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,11 +12,12 @@ class NewreleaseWidget extends StatelessWidget {
       alignment: Alignment.topLeft,
       height: MediaQuery.of(context).size.height * 0.20,
       width: MediaQuery.of(context).size.width * 0.33,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           color: Colors.transparent,
           image: DecorationImage(
-              image: AssetImage("assets/poster.png"), fit: BoxFit.fill)),
+              image: NetworkImage(ApiConsts.imageUrl + poster!),
+              fit: BoxFit.fill)),
       child: Image.asset("assets/bookmark.png"),
     );
   }

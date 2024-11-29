@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/consts/app_colors.dart';
 
 class SearchTextFormFieldWidget extends StatelessWidget {
-  const SearchTextFormFieldWidget({super.key, required this.controller});
+  const SearchTextFormFieldWidget(
+      {super.key, required this.controller, required this.onChanged});
   final TextEditingController? controller;
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,6 +13,7 @@ class SearchTextFormFieldWidget extends StatelessWidget {
       decoration: BoxDecoration(
           color: AppColors.grey, borderRadius: BorderRadius.circular(50)),
       child: TextFormField(
+        onChanged: onChanged,
         controller: controller,
         cursorHeight: 25,
         cursorColor: Colors.white,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BrowseCard extends StatelessWidget {
-  const BrowseCard({super.key});
+  const BrowseCard({super.key, required this.title});
 
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +14,7 @@ class BrowseCard extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage("assets/browseImage.png"), fit: BoxFit.fill)),
       child: Text(
-        "Action",
+        title ?? '',
         style: Theme.of(context).textTheme.bodyLarge,
       ),
     );

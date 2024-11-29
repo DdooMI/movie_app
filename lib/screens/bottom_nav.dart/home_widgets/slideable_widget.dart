@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/api/api_consts.dart';
 
 class SlideableWidget extends StatelessWidget {
-  const SlideableWidget({super.key});
+  const SlideableWidget(
+      {super.key,
+      required this.backImage,
+      required this.poster,
+      required this.title,
+      required this.date});
+
+  final String? backImage;
+  final String? poster;
+  final String? title;
+  final String? date;
 
   @override
   Widget build(BuildContext context) {
+    String yearDate = date!.substring(0, 4);
     return Container(
       height: MediaQuery.of(context).size.height * 0.37,
       child: Stack(
         children: [
-          Image.asset(
-            "assets/back.png",
+          Image.network(
+            ApiConsts.imageUrl + backImage!,
             fit: BoxFit.contain,
           ),
           Row(
@@ -21,11 +33,11 @@ class SlideableWidget extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 width: MediaQuery.of(context).size.width * 0.35,
                 height: MediaQuery.of(context).size.height * 0.25,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                     color: Colors.white,
                     image: DecorationImage(
-                        image: AssetImage("assets/poster.png"),
+                        image: NetworkImage(ApiConsts.imageUrl + poster!),
                         fit: BoxFit.fill)),
                 child: Image.asset("assets/bookmark.png"),
               ),
@@ -35,7 +47,7 @@ class SlideableWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Dora and the lost city of gold",
+                      title ?? '',
                       style: Theme.of(context).textTheme.bodyLarge,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -44,7 +56,7 @@ class SlideableWidget extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
                     Text(
-                      "2019   PG-13   2h 7m",
+                      yearDate,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!

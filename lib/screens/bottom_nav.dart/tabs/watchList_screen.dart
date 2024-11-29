@@ -19,7 +19,12 @@ class WatchlistScreen extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemBuilder: (_, index) {
-                return WatchCard();
+                return WatchCard(
+                  poster: ' ',
+                  title: '',
+                  rate: '',
+                  date: '',
+                );
               },
               itemCount: 10,
               separatorBuilder: (_, index) {

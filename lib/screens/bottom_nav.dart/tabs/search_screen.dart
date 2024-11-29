@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/screens/bottom_nav.dart/search_widgets/search_text_form_field_widget.dart';
 import 'package:movie_app/screens/bottom_nav.dart/watchList_widgets/watch_card.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController();
@@ -14,19 +19,24 @@ class SearchScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchTextFormFieldWidget(controller: controller),
+          SearchTextFormFieldWidget(
+            controller: controller,
+            onChanged: (value) {},
+          ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: ListView.separated(
-                itemBuilder: (_, index) {
-                  return WatchCard();
-                },
-                itemCount: 10,
-                separatorBuilder: (_, index) {
-                  return Divider();
-                },
-              ),
+            child: ListView.separated(
+              itemBuilder: (_, index) {
+                return WatchCard(
+                  poster: '',
+                  title: '',
+                  rate: '',
+                  date: '',
+                );
+              },
+              itemCount: 10,
+              separatorBuilder: (_, index) {
+                return Divider();
+              },
             ),
           )
         ],

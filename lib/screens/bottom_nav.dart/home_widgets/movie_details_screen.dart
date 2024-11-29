@@ -38,7 +38,12 @@ class MovieDetailsScreen extends StatelessWidget {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, index) {
-                      return RecomendedWidget();
+                      return RecomendedWidget(
+                        poster: '',
+                        rate: '',
+                        title: '',
+                        date: '',
+                      );
                     },
                     itemCount: 10,
                   ),

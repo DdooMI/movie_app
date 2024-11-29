@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/api/api_services.dart';
+import 'package:movie_app/models/genres_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_card.dart';
+import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_genres_screen.dart';
 
 class BrowseScreen extends StatelessWidget {
   const BrowseScreen({super.key});
@@ -16,23 +19,38 @@ class BrowseScreen extends StatelessWidget {
             "Browse Category",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 4),
+          FutureBuilder(
+              future: ApiServices.genresList(),
+              builder: (context, snapshot) {
+                GenresModel? topRatedMovie = snapshot.data;
+                List<Genres> genres = topRatedMovie?.genres ?? [];
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                          childAspectRatio: MediaQuery.of(context).size.width /
+                              (MediaQuery.of(context).size.height / 3),
+                        ),
+                        itemCount: genres.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  BrowseGenresScreen.routeName,
+                                  arguments: genres[index]);
+                            },
+                            child: BrowseCard(
+                              title: genres[index].name,
+                            ),
+                          );
+                        }),
                   ),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return BrowseCard();
-                  }),
-            ),
-          )
+                );
+              })
         ],
       ),
     );

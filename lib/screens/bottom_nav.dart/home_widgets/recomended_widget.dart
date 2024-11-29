@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/api/api_consts.dart';
 import 'package:movie_app/consts/app_colors.dart';
 
 class RecomendedWidget extends StatelessWidget {
-  const RecomendedWidget({super.key});
+  const RecomendedWidget(
+      {super.key,
+      required this.poster,
+      required this.rate,
+      required this.title,
+      required this.date});
+  final String? poster;
+  final String? rate;
+  final String? title;
+  final String? date;
 
   @override
   Widget build(BuildContext context) {
+    String yearDate = date!.substring(0, 4);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       height: MediaQuery.of(context).size.height * 0.20,
       width: MediaQuery.of(context).size.width * 0.33,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           color: AppColors.grey,
           boxShadow: [
             BoxShadow(
@@ -26,13 +37,14 @@ class RecomendedWidget extends StatelessWidget {
             alignment: Alignment.topLeft,
             height: MediaQuery.of(context).size.height * 0.20,
             width: MediaQuery.of(context).size.width * 0.33,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
                 color: Colors.transparent,
                 image: DecorationImage(
-                    image: AssetImage("assets/poster.png"), fit: BoxFit.fill)),
+                    image: NetworkImage(ApiConsts.imageUrl + poster!),
+                    fit: BoxFit.fill)),
             child: Image.asset("assets/bookmark.png"),
           ),
           Padding(
@@ -50,7 +62,7 @@ class RecomendedWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: Text(
-                        "7.7",
+                        rate ?? '',
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
@@ -62,7 +74,7 @@ class RecomendedWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
-                    "Deadpool 2",
+                    title ?? "",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -74,7 +86,7 @@ class RecomendedWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
-                    "2019   PG-13   2h 7m",
+                    yearDate,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
