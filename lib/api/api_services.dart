@@ -4,8 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:movie_app/api/api_consts.dart';
 import 'package:movie_app/models/genres_model.dart';
 import 'package:movie_app/models/slideable_model.dart';
-import 'package:movie_app/models/topRated_model.dart';
-import 'package:movie_app/models/upcoming_model.dart';
 
 class ApiServices {
   static Future<SlidableModel?> popularMovies() async {
@@ -25,7 +23,7 @@ class ApiServices {
     }
   }
 
-  static Future<UpcomingModel?> upcomingMovies() async {
+  static Future<SlidableModel?> upcomingMovies() async {
     var url = Uri.https(ApiConsts.baseUrl, ApiConsts.uncoming,
         {'language': 'en-US', 'page': '1'});
     var header = {
@@ -35,14 +33,14 @@ class ApiServices {
     if (response.statusCode == 200) {
       String body = response.body;
       var json = jsonDecode(body);
-      return UpcomingModel.fromJson(json);
+      return SlidableModel.fromJson(json);
     } else {
       print(response.body);
       return null;
     }
   }
 
-  static Future<TopRatedModel?> topRatedMovies() async {
+  static Future<SlidableModel?> topRatedMovies() async {
     var url = Uri.https(ApiConsts.baseUrl, ApiConsts.topRated,
         {'language': 'en-US', 'page': '1'});
     var header = {
@@ -52,7 +50,7 @@ class ApiServices {
     if (response.statusCode == 200) {
       String body = response.body;
       var json = jsonDecode(body);
-      return TopRatedModel.fromJson(json);
+      return SlidableModel.fromJson(json);
     } else {
       print(response.body);
       return null;

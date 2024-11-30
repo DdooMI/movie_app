@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/models/slideable_model.dart';
-import 'package:movie_app/models/topRated_model.dart';
-import 'package:movie_app/models/upcoming_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/newRelease_widget.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/recomended_widget.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/slideable_widget.dart';
@@ -63,7 +61,7 @@ class HomeScreen extends StatelessWidget {
               FutureBuilder(
                   future: ApiServices.upcomingMovies(),
                   builder: (context, snapshot) {
-                    UpcomingModel? upcomingMovies = snapshot.data;
+                    SlidableModel? upcomingMovies = snapshot.data;
                     List<Results> movies = upcomingMovies?.results ?? [];
                     return Expanded(
                       child: ListView.builder(
@@ -104,7 +102,7 @@ class HomeScreen extends StatelessWidget {
               FutureBuilder(
                   future: ApiServices.topRatedMovies(),
                   builder: (context, snapshot) {
-                    TopRatedModel? topRatedMovie = snapshot.data;
+                    SlidableModel? topRatedMovie = snapshot.data;
                     List<Results> movies = topRatedMovie?.results ?? [];
                     return Expanded(
                       child: ListView.builder(

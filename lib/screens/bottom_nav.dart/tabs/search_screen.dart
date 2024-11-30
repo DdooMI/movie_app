@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/search_widgets/search_text_form_field_widget.dart';
 import 'package:movie_app/screens/bottom_nav.dart/watchList_widgets/watch_card.dart';
 
@@ -27,10 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: ListView.separated(
               itemBuilder: (_, index) {
                 return WatchCard(
-                  poster: '',
-                  title: '',
-                  rate: '',
-                  date: '',
+                  movies: MovieModel(results: Results()),
                 );
               },
               itemCount: 10,

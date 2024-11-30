@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/consts/app_colors.dart';
+import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/provider/movie_provider.dart';
 import 'package:movie_app/screens/bottom_nav.dart/watchList_widgets/watch_card.dart';
+import 'package:provider/provider.dart';
 
-class WatchlistScreen extends StatelessWidget {
+class WatchlistScreen extends StatefulWidget {
   const WatchlistScreen({super.key});
 
+  @override
+  State<WatchlistScreen> createState() => _WatchlistScreenState();
+}
+
+class _WatchlistScreenState extends State<WatchlistScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,22 +25,49 @@ class WatchlistScreen extends StatelessWidget {
             "Watchlist",
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (_, index) {
-                return WatchCard(
-                  poster: ' ',
-                  title: '',
-                  rate: '',
-                  date: '',
-                );
-              },
-              itemCount: 10,
-              separatorBuilder: (_, index) {
-                return Divider();
-              },
-            ),
-          )
+          StreamBuilder<List<MovieModel>?>(
+              stream: Provider.of<MovieProvider>(context, listen: false)
+                  .getMovies(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.gold,
+                      ),
+                    ),
+                  );
+                } else {
+                  var data = snapshot.data;
+
+                  if (data == null || data.isEmpty) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(
+                          "Empty",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 22),
+                        ),
+                      ),
+                    );
+                  }
+                  return Expanded(
+                    child: ListView.separated(
+                      itemBuilder: (_, index) {
+                        return WatchCard(
+                          movies: data[index],
+                        );
+                      },
+                      itemCount: data.length,
+                      separatorBuilder: (_, index) {
+                        return Divider();
+                      },
+                    ),
+                  );
+                }
+              })
         ],
       ),
     );

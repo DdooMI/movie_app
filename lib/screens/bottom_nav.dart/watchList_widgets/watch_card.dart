@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_consts.dart';
 import 'package:movie_app/consts/app_colors.dart';
+import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/provider/movie_provider.dart';
+import 'package:provider/provider.dart';
 
-class WatchCard extends StatelessWidget {
-  const WatchCard(
-      {super.key,
-      required this.poster,
-      required this.title,
-      required this.date,
-      required this.rate});
-  final String? poster;
-  final String? title;
-  final String? date;
-  final String? rate;
+class WatchCard extends StatefulWidget {
+  const WatchCard({super.key, required this.movies});
+  final MovieModel movies;
 
   @override
+  State<WatchCard> createState() => _WatchCardState();
+}
+
+class _WatchCardState extends State<WatchCard> {
+  @override
   Widget build(BuildContext context) {
-    String yearDate = date!.substring(0, 4);
+    String yearDate = widget.movies.results.releaseDate!.substring(0, 4);
+    bool? isWatchList =
+        Provider.of<MovieProvider>(context, listen: false).isWatch;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -32,11 +34,27 @@ class WatchCard extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: Colors.white,
                 image: DecorationImage(
-                    image: poster != null
-                        ? NetworkImage(ApiConsts.imageUrl + poster!)
-                        : AssetImage("assets/back.png"),
-                    fit: BoxFit.fill)),
-            child: Image.asset("assets/bookmark.png"),
+                    image: NetworkImage(
+                        ApiConsts.imageUrl + widget.movies.results.posterPath!),
+                    fit: BoxFit.cover)),
+            child: GestureDetector(
+              onTap: () async {
+                MovieModel updatemovie = widget.movies.copyWith(
+                    id: widget.movies.id,
+                    isWatchList: !widget.movies.isWatchList,
+                    results: widget.movies.results);
+                if (widget.movies.isWatchList) {
+                  await Provider.of<MovieProvider>(context, listen: false)
+                      .deleteMovie(updatemovie);
+                } else {
+                  await Provider.of<MovieProvider>(context, listen: false)
+                      .addMovie(updatemovie);
+                }
+              },
+              child: isWatchList
+                  ? Image.asset("assets/bookmark.png")
+                  : Image.asset("assets/notbookmark.png"),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -46,7 +64,7 @@ class WatchCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    title ?? '',
+                    widget.movies.results.originalTitle ?? '',
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -67,7 +85,7 @@ class WatchCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(
-                          rate ?? '',
+                          widget.movies.results.voteAverage.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

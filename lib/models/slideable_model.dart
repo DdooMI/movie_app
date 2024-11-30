@@ -18,6 +18,17 @@ class SlidableModel {
   static List<SlidableModel> fromList(List<Map<String, dynamic>> list) {
     return list.map(SlidableModel.fromJson).toList();
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["page"] = page;
+    if (results != null) {
+      _data["results"] = results?.map((e) => e.toJson()).toList();
+    }
+    _data["total_pages"] = totalPages;
+    _data["total_results"] = totalResults;
+    return _data;
+  }
 }
 
 class Results {
@@ -72,5 +83,26 @@ class Results {
 
   static List<Results> fromList(List<Map<String, dynamic>> list) {
     return list.map(Results.fromJson).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["adult"] = adult;
+    _data["backdrop_path"] = backdropPath;
+    if (genreIds != null) {
+      _data["genre_ids"] = genreIds;
+    }
+    _data["id"] = id;
+    _data["original_language"] = originalLanguage;
+    _data["original_title"] = originalTitle;
+    _data["overview"] = overview;
+    _data["popularity"] = popularity;
+    _data["poster_path"] = posterPath;
+    _data["release_date"] = releaseDate;
+    _data["title"] = title;
+    _data["video"] = video;
+    _data["vote_average"] = voteAverage;
+    _data["vote_count"] = voteCount;
+    return _data;
   }
 }
