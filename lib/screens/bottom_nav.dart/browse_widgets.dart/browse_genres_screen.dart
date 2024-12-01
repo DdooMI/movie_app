@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/models/genres_model.dart';
-import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/watchList_widgets/watch_card.dart';
 
@@ -55,10 +54,7 @@ class BrowseGenresScreen extends StatelessWidget {
                       return ListView.separated(
                         itemBuilder: (context, index) {
                           return WatchCard(
-                            movies: MovieModel(
-                              id: movies[index].id.toString(),
-                              results: movies[index],
-                            ),
+                            results: movies[index],
                           );
                         },
                         itemCount: movies.length,

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_consts.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/provider/movie_provider.dart';
 import 'package:provider/provider.dart';
 
 class WatchCard extends StatefulWidget {
-  const WatchCard({super.key, required this.movies});
-  final MovieModel movies;
+  const WatchCard({super.key, required this.results});
+  final Results results;
 
   @override
   State<WatchCard> createState() => _WatchCardState();
@@ -16,9 +17,7 @@ class WatchCard extends StatefulWidget {
 class _WatchCardState extends State<WatchCard> {
   @override
   Widget build(BuildContext context) {
-    String yearDate = widget.movies.results.releaseDate!.substring(0, 4);
-    bool? isWatchList =
-        Provider.of<MovieProvider>(context, listen: false).isWatch;
+    String yearDate = widget.results.releaseDate!.substring(0, 4);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -35,23 +34,21 @@ class _WatchCardState extends State<WatchCard> {
                 color: Colors.white,
                 image: DecorationImage(
                     image: NetworkImage(
-                        ApiConsts.imageUrl + widget.movies.results.posterPath!),
+                        ApiConsts.imageUrl + widget.results.posterPath!),
                     fit: BoxFit.cover)),
             child: GestureDetector(
               onTap: () async {
-                MovieModel updatemovie = widget.movies.copyWith(
-                    id: widget.movies.id,
-                    isWatchList: !widget.movies.isWatchList,
-                    results: widget.movies.results);
-                if (widget.movies.isWatchList) {
-                  await Provider.of<MovieProvider>(context, listen: false)
-                      .deleteMovie(updatemovie);
+                Results updateResults = widget.results.copyWith(
+                    results: Results(isWatch: !(widget.results.isWatch!)));
+                if (updateResults.isWatch!) {
+                  Provider.of<MovieProvider>(context)
+                      .deleteMovie(MovieModel(results: updateResults));
                 } else {
-                  await Provider.of<MovieProvider>(context, listen: false)
-                      .addMovie(updatemovie);
+                  Provider.of<MovieProvider>(context)
+                      .addMovie(MovieModel(results: updateResults));
                 }
               },
-              child: isWatchList
+              child: widget.results.isWatch!
                   ? Image.asset("assets/bookmark.png")
                   : Image.asset("assets/notbookmark.png"),
             ),
@@ -64,7 +61,7 @@ class _WatchCardState extends State<WatchCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    widget.movies.results.originalTitle ?? '',
+                    widget.results.originalTitle ?? '',
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -85,7 +82,7 @@ class _WatchCardState extends State<WatchCard> {
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(
-                          widget.movies.results.voteAverage.toString(),
+                          widget.results.voteAverage.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

@@ -46,6 +46,7 @@ class Results {
   bool? video;
   double? voteAverage;
   int? voteCount;
+  bool? isWatch;
 
   Results(
       {this.adult,
@@ -61,7 +62,8 @@ class Results {
       this.title,
       this.video,
       this.voteAverage,
-      this.voteCount});
+      this.voteCount,
+      this.isWatch = false});
 
   Results.fromJson(Map<String, dynamic> json) {
     adult = json["adult"];
@@ -104,5 +106,11 @@ class Results {
     _data["vote_average"] = voteAverage;
     _data["vote_count"] = voteCount;
     return _data;
+  }
+
+  Results copyWith({
+    required Results results,
+  }) {
+    return Results(isWatch: results.isWatch);
   }
 }

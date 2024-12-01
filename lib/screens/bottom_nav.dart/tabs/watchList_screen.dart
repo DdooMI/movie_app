@@ -57,7 +57,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                     child: ListView.separated(
                       itemBuilder: (_, index) {
                         return WatchCard(
-                          movies: data[index],
+                          results: data[index].results,
                         );
                       },
                       itemCount: data.length,

@@ -18,7 +18,6 @@ class ApiServices {
       var json = jsonDecode(body);
       return SlidableModel.fromJson(json);
     } else {
-      print(response.body);
       return null;
     }
   }

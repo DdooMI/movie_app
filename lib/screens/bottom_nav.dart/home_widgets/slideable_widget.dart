@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_consts.dart';
+import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/models/slideable_model.dart';
+import 'package:movie_app/provider/movie_provider.dart';
+import 'package:provider/provider.dart';
 
-class SlideableWidget extends StatelessWidget {
-  const SlideableWidget(
-      {super.key,
-      required this.backImage,
-      required this.poster,
-      required this.title,
-      required this.date});
+class SlideableWidget extends StatefulWidget {
+  const SlideableWidget({super.key, required this.results});
 
-  final String? backImage;
-  final String? poster;
-  final String? title;
-  final String? date;
+  final Results results;
 
   @override
+  State<SlideableWidget> createState() => _SlideableWidgetState();
+}
+
+class _SlideableWidgetState extends State<SlideableWidget> {
+  @override
   Widget build(BuildContext context) {
-    String yearDate = date!.substring(0, 4);
+    String yearDate = widget.results.releaseDate!.substring(0, 4);
     return Container(
       height: MediaQuery.of(context).size.height * 0.37,
       child: Stack(
         children: [
           Image.network(
-            ApiConsts.imageUrl + backImage!,
+            ApiConsts.imageUrl + widget.results.backdropPath!,
             fit: BoxFit.contain,
           ),
           Row(
@@ -37,9 +38,25 @@ class SlideableWidget extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     color: Colors.white,
                     image: DecorationImage(
-                        image: NetworkImage(ApiConsts.imageUrl + poster!),
+                        image: NetworkImage(
+                            ApiConsts.imageUrl + widget.results.posterPath!),
                         fit: BoxFit.fill)),
-                child: Image.asset("assets/bookmark.png"),
+                child: GestureDetector(
+                  onTap: () async {
+                    Results updateResults = widget.results.copyWith(
+                        results: Results(isWatch: !(widget.results.isWatch!)));
+                    if (updateResults.isWatch!) {
+                      Provider.of<MovieProvider>(context)
+                          .deleteMovie(MovieModel(results: updateResults));
+                    } else {
+                      Provider.of<MovieProvider>(context)
+                          .addMovie(MovieModel(results: updateResults));
+                    }
+                  },
+                  child: widget.results.isWatch!
+                      ? Image.asset("assets/bookmark.png")
+                      : Image.asset("assets/notbookmark.png"),
+                ),
               ),
               Expanded(
                 child: Column(
@@ -47,7 +64,7 @@ class SlideableWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title ?? '',
+                      widget.results.originalTitle ?? '',
                       style: Theme.of(context).textTheme.bodyLarge,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
