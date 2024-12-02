@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_consts.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/models/movie_model.dart';
-import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/provider/movie_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +14,17 @@ class WatchCard extends StatefulWidget {
 }
 
 class _WatchCardState extends State<WatchCard> {
-  MovieModel updatemove = MovieModel(results: Results());
   @override
   Widget build(BuildContext context) {
-    String yearDate = widget.movieModel!.results.releaseDate!.substring(0, 4);
+    // Safely handle null values
+    final results = widget.movieModel?.results;
+    final String yearDate =
+        results?.releaseDate?.substring(0, 4) ?? 'Unknown Year';
+    final String backdropPath = results?.backdropPath ?? '';
+    final String originalTitle = results?.originalTitle ?? 'No Title';
+    final String voteAverage =
+        results?.voteAverage?.toStringAsFixed(1) ?? 'N/A';
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -31,23 +37,33 @@ class _WatchCardState extends State<WatchCard> {
             alignment: Alignment.topLeft,
             width: MediaQuery.of(context).size.width * 0.4,
             decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: Colors.white,
-                image: DecorationImage(
-                    image: NetworkImage(ApiConsts.imageUrl +
-                        widget.movieModel!.results.backdropPath!),
-                    fit: BoxFit.cover)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: Colors.white,
+              image: backdropPath.isNotEmpty
+                  ? DecorationImage(
+                      image: NetworkImage(ApiConsts.imageUrl + backdropPath),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
             child: GestureDetector(
               onTap: () async {
-                updatemove = widget.movieModel!.copyWith(
-                    results: widget.movieModel?.results,
-                    isWatchList: !(widget.movieModel!.isWatchList));
-                if (updatemove.isWatchList) {
+                setState(() {
+                  widget.movieModel!.isWatchList =
+                      !widget.movieModel!.isWatchList;
+                });
+
+                final updatedMovie = widget.movieModel!.copyWith(
+                  results: widget.movieModel?.results,
+                  isWatchList: widget.movieModel!.isWatchList,
+                );
+
+                if (updatedMovie.isWatchList) {
                   Provider.of<MovieProvider>(context, listen: false)
-                      .addMovie(updatemove);
+                      .addMovie(updatedMovie);
                 } else {
                   Provider.of<MovieProvider>(context, listen: false)
-                      .deleteMovie(updatemove);
+                      .deleteMovie(updatedMovie);
                 }
               },
               child: widget.movieModel!.isWatchList
@@ -63,7 +79,7 @@ class _WatchCardState extends State<WatchCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    widget.movieModel!.results.originalTitle ?? '',
+                    originalTitle,
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -84,7 +100,7 @@ class _WatchCardState extends State<WatchCard> {
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(
-                          widget.movieModel!.results.voteAverage.toString(),
+                          voteAverage,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

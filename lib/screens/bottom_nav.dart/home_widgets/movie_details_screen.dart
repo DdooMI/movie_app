@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/consts/app_colors.dart';
+import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/movie_details_widget.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/recomended_widget.dart';
 
@@ -39,10 +41,7 @@ class MovieDetailsScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, index) {
                       return RecomendedWidget(
-                        poster: '',
-                        rate: '',
-                        title: '',
-                        date: '',
+                        movieModel: MovieModel(results: Results()),
                       );
                     },
                     itemCount: 10,

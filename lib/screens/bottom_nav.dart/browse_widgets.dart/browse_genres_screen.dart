@@ -45,50 +45,52 @@ class BrowseGenresScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
-                child: FutureBuilder(
-                    future: ApiServices.discoverMovie(genre.id ?? 1),
-                    builder: (context, snapshot) {
-                      SlidableModel? discoverMovies = snapshot.data;
-                      List<Results> movies = discoverMovies?.results ?? [];
-                      return ListView.separated(
-                        itemBuilder: (context, index) {
-                          return FutureBuilder(
-                              future: FirebaseServices.existMovie(
-                                  movies[index].id.toString()),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Center(
-                                      child: CircularProgressIndicator(
-                                    color: AppColors.gold,
-                                  ));
-                                } else if (snapshot.hasError) {
-                                  return Center(
-                                      child: Text("Error: ${snapshot.error}"));
-                                } else if (snapshot.hasData) {
-                                  MovieModel movieModel =
-                                      MovieModel(results: movies[index]);
-                                  movieModel.isWatchList = snapshot.data!;
-                                  return WatchCard(
-                                    movieModel: movieModel,
-                                  );
-                                } else {
-                                  return const Center(
-                                      child: Text("No data available"));
-                                }
-                              });
-                        },
-                        itemCount: movies.length,
-                        separatorBuilder: (_, index) {
-                          return Divider();
-                        },
-                      );
-                    }),
-              ),
-            )
+            FutureBuilder(
+                future: ApiServices.discoverMovie(genre.id ?? 1),
+                builder: (context, snapshot) {
+                  SlidableModel? discoverMovies = snapshot.data;
+                  List<Results> movies = discoverMovies?.results ?? [];
+                  return Expanded(
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return FutureBuilder(
+                          future: FirebaseServices.existMovie(
+                              movies[index].id.toString()),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.gold,
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text("Error: ${snapshot.error}"),
+                              );
+                            } else if (snapshot.hasData) {
+                              MovieModel movieModel =
+                                  MovieModel(results: movies[index]);
+                              movieModel.isWatchList = snapshot.data ?? false;
+
+                              return WatchCard(
+                                movieModel: movieModel,
+                              );
+                            } else {
+                              return const Center(
+                                child: Text("No data available"),
+                              );
+                            }
+                          },
+                        );
+                      },
+                      itemCount: movies.length,
+                      separatorBuilder: (_, index) {
+                        return Divider();
+                      },
+                    ),
+                  );
+                })
           ],
         ),
       ),

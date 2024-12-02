@@ -82,8 +82,31 @@ class HomeScreen extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
-                          return NewreleaseWidget(
-                            poster: movies[index].posterPath,
+                          return FutureBuilder<bool>(
+                            future: FirebaseServices.existMovie(
+                                movies[index].id.toString()),
+                            builder: (BuildContext context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                  color: AppColors.gold,
+                                ));
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                    child: Text("Error: ${snapshot.error}"));
+                              } else if (snapshot.hasData) {
+                                MovieModel movieModel =
+                                    MovieModel(results: movies[index]);
+                                movieModel.isWatchList = snapshot.data!;
+                                return NewreleaseWidget(
+                                  movieModel: movieModel,
+                                );
+                              } else {
+                                return const Center(
+                                    child: Text("No data available"));
+                              }
+                            },
                           );
                         },
                         itemCount: movies.length,
@@ -123,11 +146,31 @@ class HomeScreen extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
-                          return RecomendedWidget(
-                            poster: movies[index].posterPath,
-                            rate: movies[index].voteAverage.toString(),
-                            title: movies[index].originalTitle,
-                            date: movies[index].releaseDate,
+                          return FutureBuilder<bool>(
+                            future: FirebaseServices.existMovie(
+                                movies[index].id.toString()),
+                            builder: (BuildContext context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                  color: AppColors.gold,
+                                ));
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                    child: Text("Error: ${snapshot.error}"));
+                              } else if (snapshot.hasData) {
+                                MovieModel movieModel =
+                                    MovieModel(results: movies[index]);
+                                movieModel.isWatchList = snapshot.data!;
+                                return RecomendedWidget(
+                                  movieModel: movieModel,
+                                );
+                              } else {
+                                return const Center(
+                                    child: Text("No data available"));
+                              }
+                            },
                           );
                         },
                         itemCount: movies.length,

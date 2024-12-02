@@ -5,7 +5,7 @@ class AppTheme {
   static ThemeData theme = ThemeData(
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.secondary,
-        type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.shifting,
         showSelectedLabels: true,
         showUnselectedLabels: true,
         selectedLabelStyle: TextStyle(

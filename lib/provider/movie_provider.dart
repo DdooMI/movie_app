@@ -26,6 +26,7 @@ class MovieProvider extends ChangeNotifier {
             textColor: Colors.white,
             fontSize: 16.0);
       });
+      notifyListeners();
     } catch (e) {
       print("errrrrroorrr$e");
       Fluttertoast.showToast(
@@ -42,6 +43,7 @@ class MovieProvider extends ChangeNotifier {
   Future<void> deleteMovie(MovieModel movie) async {
     try {
       await FirebaseServices.deleteMovieWatchList(movie);
+      notifyListeners();
     } catch (e) {
       Fluttertoast.showToast(
           msg: "something went wrong",

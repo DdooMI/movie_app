@@ -42,15 +42,21 @@ class _SlideableWidgetState extends State<SlideableWidget> {
                         fit: BoxFit.fill)),
                 child: GestureDetector(
                   onTap: () async {
-                    MovieModel updatemove = widget.movieModel!.copyWith(
-                        results: widget.movieModel?.results,
-                        isWatchList: !(widget.movieModel!.isWatchList));
-                    if (updatemove.isWatchList) {
+                    setState(() {
+                      widget.movieModel!.isWatchList =
+                          !widget.movieModel!.isWatchList;
+                    });
+
+                    MovieModel updatedMovie = widget.movieModel!.copyWith(
+                      results: widget.movieModel?.results,
+                      isWatchList: widget.movieModel!.isWatchList,
+                    );
+                    if (updatedMovie.isWatchList) {
                       Provider.of<MovieProvider>(context, listen: false)
-                          .addMovie(updatemove);
+                          .addMovie(updatedMovie);
                     } else {
                       Provider.of<MovieProvider>(context, listen: false)
-                          .deleteMovie(updatemove);
+                          .deleteMovie(updatedMovie);
                     }
                   },
                   child: widget.movieModel!.isWatchList
