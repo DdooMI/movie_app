@@ -7,17 +7,18 @@ import 'package:movie_app/provider/movie_provider.dart';
 import 'package:provider/provider.dart';
 
 class WatchCard extends StatefulWidget {
-  const WatchCard({super.key, required this.results});
-  final Results results;
+  const WatchCard({super.key, required this.movieModel});
+  final MovieModel? movieModel;
 
   @override
   State<WatchCard> createState() => _WatchCardState();
 }
 
 class _WatchCardState extends State<WatchCard> {
+  MovieModel updatemove = MovieModel(results: Results());
   @override
   Widget build(BuildContext context) {
-    String yearDate = widget.results.releaseDate!.substring(0, 4);
+    String yearDate = widget.movieModel!.results.releaseDate!.substring(0, 4);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -33,22 +34,23 @@ class _WatchCardState extends State<WatchCard> {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: Colors.white,
                 image: DecorationImage(
-                    image: NetworkImage(
-                        ApiConsts.imageUrl + widget.results.posterPath!),
+                    image: NetworkImage(ApiConsts.imageUrl +
+                        widget.movieModel!.results.backdropPath!),
                     fit: BoxFit.cover)),
             child: GestureDetector(
               onTap: () async {
-                Results updateResults = widget.results.copyWith(
-                    results: Results(isWatch: !(widget.results.isWatch!)));
-                if (updateResults.isWatch!) {
-                  Provider.of<MovieProvider>(context)
-                      .deleteMovie(MovieModel(results: updateResults));
+                updatemove = widget.movieModel!.copyWith(
+                    results: widget.movieModel?.results,
+                    isWatchList: !(widget.movieModel!.isWatchList));
+                if (updatemove.isWatchList) {
+                  Provider.of<MovieProvider>(context, listen: false)
+                      .addMovie(updatemove);
                 } else {
-                  Provider.of<MovieProvider>(context)
-                      .addMovie(MovieModel(results: updateResults));
+                  Provider.of<MovieProvider>(context, listen: false)
+                      .deleteMovie(updatemove);
                 }
               },
-              child: widget.results.isWatch!
+              child: widget.movieModel!.isWatchList
                   ? Image.asset("assets/bookmark.png")
                   : Image.asset("assets/notbookmark.png"),
             ),
@@ -61,7 +63,7 @@ class _WatchCardState extends State<WatchCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    widget.results.originalTitle ?? '',
+                    widget.movieModel!.results.originalTitle ?? '',
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -82,7 +84,7 @@ class _WatchCardState extends State<WatchCard> {
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(
-                          widget.results.voteAverage.toString(),
+                          widget.movieModel!.results.voteAverage.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

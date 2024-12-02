@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
+import 'package:movie_app/firebase/firebase_services.dart';
 import 'package:movie_app/models/genres_model.dart';
+import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/watchList_widgets/watch_card.dart';
 
@@ -53,9 +55,31 @@ class BrowseGenresScreen extends StatelessWidget {
                       List<Results> movies = discoverMovies?.results ?? [];
                       return ListView.separated(
                         itemBuilder: (context, index) {
-                          return WatchCard(
-                            results: movies[index],
-                          );
+                          return FutureBuilder(
+                              future: FirebaseServices.existMovie(
+                                  movies[index].id.toString()),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                      child: CircularProgressIndicator(
+                                    color: AppColors.gold,
+                                  ));
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                      child: Text("Error: ${snapshot.error}"));
+                                } else if (snapshot.hasData) {
+                                  MovieModel movieModel =
+                                      MovieModel(results: movies[index]);
+                                  movieModel.isWatchList = snapshot.data!;
+                                  return WatchCard(
+                                    movieModel: movieModel,
+                                  );
+                                } else {
+                                  return const Center(
+                                      child: Text("No data available"));
+                                }
+                              });
                         },
                         itemCount: movies.length,
                         separatorBuilder: (_, index) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/firebase/firebase_services.dart';
+import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/newRelease_widget.dart';
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/recomended_widget.dart';
@@ -22,13 +23,27 @@ class HomeScreen extends StatelessWidget {
               List<Results> movies = popularMovies?.results ?? [];
               return CarouselSlider(
                   items: movies.map((i) {
-                    return FutureBuilder(
+                    return FutureBuilder<bool>(
                       future: FirebaseServices.existMovie(i.id.toString()),
                       builder: (BuildContext context, snapshot) {
-                        i.isWatch = snapshot.data!;
-                        return SlideableWidget(
-                          results: i,
-                        );
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: AppColors.gold,
+                          ));
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text("Error: ${snapshot.error}"));
+                        } else if (snapshot.hasData) {
+                          MovieModel movieModel = MovieModel(results: i);
+                          movieModel.isWatchList = snapshot.data!;
+                          return SlideableWidget(
+                            movieModel: movieModel,
+                          );
+                        } else {
+                          return const Center(child: Text("No data available"));
+                        }
                       },
                     );
                   }).toList(),

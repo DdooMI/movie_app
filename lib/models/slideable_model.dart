@@ -46,24 +46,23 @@ class Results {
   bool? video;
   double? voteAverage;
   int? voteCount;
-  bool? isWatch;
 
-  Results(
-      {this.adult,
-      this.backdropPath,
-      this.genreIds,
-      this.id,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.releaseDate,
-      this.title,
-      this.video,
-      this.voteAverage,
-      this.voteCount,
-      this.isWatch = false});
+  Results({
+    this.adult,
+    this.backdropPath,
+    this.genreIds,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+  });
 
   Results.fromJson(Map<String, dynamic> json) {
     adult = json["adult"];
@@ -106,11 +105,5 @@ class Results {
     _data["vote_average"] = voteAverage;
     _data["vote_count"] = voteCount;
     return _data;
-  }
-
-  Results copyWith({
-    required Results results,
-  }) {
-    return Results(isWatch: results.isWatch);
   }
 }

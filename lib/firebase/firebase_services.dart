@@ -16,7 +16,6 @@ class FirebaseServices {
           fromFirestore: (snapshot, _) =>
               UserModel.fromJson(snapshot.data() ?? {}),
           toFirestore: (value, _) => value.toJson());
-
   static Stream<List<MovieModel>> getWatchList() async* {
     CollectionReference<MovieModel> collection = getCollection();
     Stream<QuerySnapshot<MovieModel>> query = collection.snapshots();
@@ -27,7 +26,6 @@ class FirebaseServices {
 
   static Future<void> addMovieWatchList(MovieModel movie) async {
     final collection = getCollection();
-
     if (!await existMovie(movie.results.id.toString())) {
       await collection.doc(movie.results.id.toString()).set(movie);
     }
@@ -37,7 +35,6 @@ class FirebaseServices {
     final collection = getCollection();
     final movieId = id;
     final existingMovie = await collection.doc(movieId.toString()).get();
-
     if (existingMovie.exists) {
       return true;
     }

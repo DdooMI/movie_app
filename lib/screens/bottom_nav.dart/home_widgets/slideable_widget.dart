@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_consts.dart';
 import 'package:movie_app/models/movie_model.dart';
-import 'package:movie_app/models/slideable_model.dart';
 import 'package:movie_app/provider/movie_provider.dart';
 import 'package:provider/provider.dart';
 
 class SlideableWidget extends StatefulWidget {
-  const SlideableWidget({super.key, required this.results});
+  const SlideableWidget({super.key, required this.movieModel});
 
-  final Results results;
+  final MovieModel? movieModel;
 
   @override
   State<SlideableWidget> createState() => _SlideableWidgetState();
@@ -17,13 +16,13 @@ class SlideableWidget extends StatefulWidget {
 class _SlideableWidgetState extends State<SlideableWidget> {
   @override
   Widget build(BuildContext context) {
-    String yearDate = widget.results.releaseDate!.substring(0, 4);
+    String yearDate = widget.movieModel!.results.releaseDate!.substring(0, 4);
     return Container(
       height: MediaQuery.of(context).size.height * 0.37,
       child: Stack(
         children: [
           Image.network(
-            ApiConsts.imageUrl + widget.results.backdropPath!,
+            ApiConsts.imageUrl + widget.movieModel!.results.backdropPath!,
             fit: BoxFit.contain,
           ),
           Row(
@@ -38,22 +37,23 @@ class _SlideableWidgetState extends State<SlideableWidget> {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     color: Colors.white,
                     image: DecorationImage(
-                        image: NetworkImage(
-                            ApiConsts.imageUrl + widget.results.posterPath!),
+                        image: NetworkImage(ApiConsts.imageUrl +
+                            widget.movieModel!.results.posterPath!),
                         fit: BoxFit.fill)),
                 child: GestureDetector(
                   onTap: () async {
-                    Results updateResults = widget.results.copyWith(
-                        results: Results(isWatch: !(widget.results.isWatch!)));
-                    if (updateResults.isWatch!) {
-                      Provider.of<MovieProvider>(context)
-                          .deleteMovie(MovieModel(results: updateResults));
+                    MovieModel updatemove = widget.movieModel!.copyWith(
+                        results: widget.movieModel?.results,
+                        isWatchList: !(widget.movieModel!.isWatchList));
+                    if (updatemove.isWatchList) {
+                      Provider.of<MovieProvider>(context, listen: false)
+                          .addMovie(updatemove);
                     } else {
-                      Provider.of<MovieProvider>(context)
-                          .addMovie(MovieModel(results: updateResults));
+                      Provider.of<MovieProvider>(context, listen: false)
+                          .deleteMovie(updatemove);
                     }
                   },
-                  child: widget.results.isWatch!
+                  child: widget.movieModel!.isWatchList
                       ? Image.asset("assets/bookmark.png")
                       : Image.asset("assets/notbookmark.png"),
                 ),
@@ -64,7 +64,7 @@ class _SlideableWidgetState extends State<SlideableWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.results.originalTitle ?? '',
+                      widget.movieModel!.results.originalTitle ?? '',
                       style: Theme.of(context).textTheme.bodyLarge,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

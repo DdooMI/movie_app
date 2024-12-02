@@ -14,11 +14,6 @@ class MovieProvider extends ChangeNotifier {
     }
   }
 
-  existMovie(String id) async {
-    isWatch = await FirebaseServices.existMovie(id);
-    notifyListeners();
-  }
-
   Future<void> addMovie(MovieModel movie) async {
     try {
       await FirebaseServices.addMovieWatchList(movie).then((value) {
