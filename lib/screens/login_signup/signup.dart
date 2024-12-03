@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/models/user_model.dart';
 import 'package:movie_app/provider/user_provider.dart';
@@ -49,7 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     LoginTextFormFieldWidget(
                       controller: namecontroller,
-                      hintText: "Name",
+                      hintText: AppLocalizations.of(context)!.name,
                       prefixIcon: const Icon(
                         Icons.person,
                         color: Colors.white,
@@ -66,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     LoginTextFormFieldWidget(
                       controller: emailcontroller,
-                      hintText: "email",
+                      hintText: AppLocalizations.of(context)!.email,
                       prefixIcon: const Icon(
                         Icons.email,
                         color: Colors.white,
@@ -76,14 +77,14 @@ class _SignupScreenState extends State<SignupScreen> {
                         if (value == null ||
                             value.isEmpty ||
                             !isValidEmail(value)) {
-                          return "email";
+                          return AppLocalizations.of(context)!.emailValidator;
                         }
                         return null;
                       },
                     ),
                     LoginTextFormFieldWidget(
                       controller: passwordcontroller,
-                      hintText: "Password",
+                      hintText: AppLocalizations.of(context)!.password,
                       prefixIcon: const Icon(
                         Icons.lock,
                         color: Colors.white,
@@ -93,7 +94,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         if (value == null ||
                             value.isEmpty ||
                             value.length < 8) {
-                          return "password";
+                          return AppLocalizations.of(context)!
+                              .passwordValidator;
                         }
                         return null;
                       },
@@ -125,13 +127,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                 });
                               }
                             },
-                            text: "Sign Up"),
+                            text: AppLocalizations.of(context)!.signup),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "I have an Account",
+                          AppLocalizations.of(context)!.haveAcoount,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -143,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   .pushReplacementNamed(LoginScreen.routeName);
                             },
                             child: Text(
-                              "log in",
+                              AppLocalizations.of(context)!.login,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge

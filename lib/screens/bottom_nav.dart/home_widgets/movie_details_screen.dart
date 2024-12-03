@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/firebase/firebase_services.dart';
@@ -73,7 +74,7 @@ class MovieDetailsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
-                    "More Like This",
+                    AppLocalizations.of(context)!.more,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),

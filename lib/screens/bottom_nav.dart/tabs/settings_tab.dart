@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/firebase/firebase_services.dart';
 import 'package:movie_app/provider/localization_provider.dart';
@@ -22,14 +23,14 @@ class SettingsTab extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Settings",
+              AppLocalizations.of(context)!.settings,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomListtileSettingsWidget(
-                title: "language",
+                title: AppLocalizations.of(context)!.language,
                 trailing: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
@@ -40,12 +41,12 @@ class SettingsTab extends StatelessWidget {
                       items: [
                         DropdownMenuItem(
                           value: 'en',
-                          child: Text("english",
+                          child: Text(AppLocalizations.of(context)!.english,
                               style: Theme.of(context).textTheme.bodyLarge),
                         ),
                         DropdownMenuItem(
                           value: 'ar',
-                          child: Text("arabic",
+                          child: Text(AppLocalizations.of(context)!.arabic,
                               style: Theme.of(context).textTheme.bodyLarge),
                         )
                       ],
@@ -74,7 +75,7 @@ class SettingsTab extends StatelessWidget {
                 Navigator.of(context).popAndPushNamed(LoginScreen.routeName);
               },
               child: CustomListtileSettingsWidget(
-                  title: "signout",
+                  title: AppLocalizations.of(context)!.signout,
                   trailing: Icon(
                     Icons.logout_outlined,
                     size: 40,

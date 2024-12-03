@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/consts/app_theme.dart';
 import 'package:movie_app/firebase_options.dart';
 import 'package:movie_app/provider/localization_provider.dart';
@@ -34,6 +35,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale:
+          Locale(Provider.of<LocalizationProvider>(context).appLocal ?? "en"),
       debugShowCheckedModeBanner: false,
       routes: {
         BottomNavScreen.routeName: (_) => const BottomNavScreen(),

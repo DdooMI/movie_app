@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/provider/user_provider.dart';
 import 'package:movie_app/screens/bottom_nav.dart/bottom_nav_screen.dart';
@@ -44,32 +45,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 LoginTextFormFieldWidget(
                   controller: emailcontroller,
-                  hintText: "email",
+                  hintText: AppLocalizations.of(context)!.email,
                   prefixIcon: Icon(
                     Icons.email,
-                    color: Colors.white,
+                    color: AppColors.gold,
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null ||
                         value.isEmpty ||
                         !isValidEmail(value)) {
-                      return "";
+                      return AppLocalizations.of(context)!.emailValidator;
                     }
                     return null;
                   },
                 ),
                 LoginTextFormFieldWidget(
                   controller: passwordcontroller,
-                  hintText: "password",
-                  prefixIcon: Icon(
-                    Icons.lock,
-                    color: Colors.white,
-                  ),
+                  hintText: AppLocalizations.of(context)!.password,
+                  prefixIcon: Icon(Icons.lock, color: AppColors.gold),
                   password: true,
                   validator: (value) {
                     if (value == null || value.isEmpty || value.length < 8) {
-                      return "";
+                      return AppLocalizations.of(context)!.passwordValidator;
                     }
                     return null;
                   },
@@ -96,13 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               }
                             },
-                            text: "Log in"),
+                            text: AppLocalizations.of(context)!.login),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't you have an Account?",
+                          AppLocalizations.of(context)!.dontHaveAccount,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium
@@ -114,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .pushReplacementNamed(SignupScreen.routeName);
                             },
                             child: Text(
-                              "signup",
+                              AppLocalizations.of(context)!.signup,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge

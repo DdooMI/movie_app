@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/firebase/firebase_services.dart';
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "New Releases",
+                  AppLocalizations.of(context)!.newRelease,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -133,7 +134,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "Recomended",
+                  AppLocalizations.of(context)!.recommended,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),

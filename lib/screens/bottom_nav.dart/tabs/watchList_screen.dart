@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/consts/app_colors.dart';
 import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/provider/movie_provider.dart';
@@ -22,7 +23,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Watchlist",
+            AppLocalizations.of(context)!.watchList,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           StreamBuilder<List<MovieModel>?>(
@@ -44,7 +45,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                     return Expanded(
                       child: Center(
                         child: Text(
-                          "Empty",
+                          AppLocalizations.of(context)!.noWatchList,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!

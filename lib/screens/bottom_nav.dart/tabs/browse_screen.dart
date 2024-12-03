@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/models/genres_model.dart';
 import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_card.dart';
@@ -16,7 +17,7 @@ class BrowseScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Browse Category",
+            AppLocalizations.of(context)!.bc,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           FutureBuilder(

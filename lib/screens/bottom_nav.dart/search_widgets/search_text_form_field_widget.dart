@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movie_app/consts/app_colors.dart';
 
 class SearchTextFormFieldWidget extends StatelessWidget {
@@ -23,7 +24,7 @@ class SearchTextFormFieldWidget extends StatelessWidget {
               color: Colors.white,
               size: 25,
             ),
-            hintText: "Search....",
+            hintText: "${AppLocalizations.of(context)!.search}....",
             hintStyle: Theme.of(context).textTheme.bodyLarge,
             disabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.third),
