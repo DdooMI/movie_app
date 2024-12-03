@@ -69,7 +69,7 @@ class Results {
     backdropPath = json["backdrop_path"];
     genreIds =
         json["genre_ids"] == null ? null : List<int>.from(json["genre_ids"]);
-    id = json["id"];
+    id = json["id"] != null ? (json["id"] as num).toInt() : null;
     originalLanguage = json["original_language"];
     originalTitle = json["original_title"];
     overview = json["overview"];

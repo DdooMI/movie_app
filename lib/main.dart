@@ -7,6 +7,7 @@ import 'package:movie_app/provider/movie_provider.dart';
 import 'package:movie_app/provider/user_provider.dart';
 import 'package:movie_app/screens/bottom_nav.dart/bottom_nav_screen.dart';
 import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_genres_screen.dart';
+import 'package:movie_app/screens/bottom_nav.dart/home_widgets/movie_details_screen.dart';
 import 'package:movie_app/screens/login_signup/login.dart';
 import 'package:movie_app/screens/login_signup/signup.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
         BottomNavScreen.routeName: (_) => const BottomNavScreen(),
         BrowseGenresScreen.routeName: (_) => const BrowseGenresScreen(),
         LoginScreen.routeName: (_) => const LoginScreen(),
-        SignupScreen.routeName: (_) => const SignupScreen()
+        SignupScreen.routeName: (_) => const SignupScreen(),
+        MovieDetailsScreen.routeName: (_) => const MovieDetailsScreen()
       },
       theme: AppTheme.theme,
       home: const LoginScreen(),
