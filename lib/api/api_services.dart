@@ -35,7 +35,6 @@ class ApiServices {
       var json = jsonDecode(body);
       return SlidableModel.fromJson(json);
     } else {
-      print(response.body);
       return null;
     }
   }
@@ -52,7 +51,6 @@ class ApiServices {
       var json = jsonDecode(body);
       return SlidableModel.fromJson(json);
     } else {
-      print(response.body);
       return null;
     }
   }
@@ -69,7 +67,6 @@ class ApiServices {
       var json = jsonDecode(body);
       return GenresModel.fromJson(json);
     } else {
-      print(response.body);
       return null;
     }
   }
@@ -92,14 +89,12 @@ class ApiServices {
       var json = jsonDecode(body);
       return SlidableModel.fromJson(json);
     } else {
-      print(response.body);
       return null;
     }
   }
 
   static Future<DetailsModel?> detailsMove(String movieId) async {
     String details = '/3/movie/$movieId';
-    print(details);
     var url = Uri.https(ApiConsts.baseUrl, details, {'language': 'en-US'});
     var header = {
       'Authorization': 'Bearer ${ApiConsts.token}',

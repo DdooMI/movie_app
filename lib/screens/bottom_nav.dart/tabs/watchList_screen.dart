@@ -63,7 +63,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                       },
                       itemCount: data.length,
                       separatorBuilder: (_, index) {
-                        return Divider();
+                        return const Divider();
                       },
                     ),
                   );

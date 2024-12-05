@@ -40,27 +40,27 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 currentIndex: currentIndex,
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    icon: const Icon(Icons.home),
                     label: AppLocalizations.of(context)!.home,
                     backgroundColor: AppColors.secondary,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     label: AppLocalizations.of(context)!.search,
                     backgroundColor: AppColors.secondary,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.movie),
+                    icon: const Icon(Icons.movie),
                     label: AppLocalizations.of(context)!.browse,
                     backgroundColor: AppColors.secondary,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.book_rounded),
+                    icon: const Icon(Icons.book_rounded),
                     label: AppLocalizations.of(context)!.watchList,
                     backgroundColor: AppColors.secondary,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
+                    icon: const Icon(Icons.settings),
                     label: AppLocalizations.of(context)!.settings,
                     backgroundColor: AppColors.secondary,
                   )

@@ -20,10 +20,9 @@ class _SearchScreenState extends State<SearchScreen> {
   bool isSearching = false;
   bool isLoading = false;
 
-  /// Function to handle search
-  Future<void> _onSearch(String query) async {
+  Future<void> onSearch(String query) async {
     if (query.isEmpty) {
-      _loadPopularMovies();
+      loadMovies();
       return;
     }
 
@@ -33,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     try {
       final SlidableModel? searchResults = await ApiServices.searchMovie(query);
-      final List<MovieModel> searchMovies = await _checkWatchlist(
+      final List<MovieModel> searchMovies = await checkWatchlist(
         searchResults?.results ?? [],
       );
 
@@ -49,14 +48,14 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  Future<void> _loadPopularMovies() async {
+  Future<void> loadMovies() async {
     setState(() {
       isLoading = true;
     });
 
     try {
       final SlidableModel? popularMovies = await ApiServices.popularMovies();
-      final List<MovieModel> popularList = await _checkWatchlist(
+      final List<MovieModel> popularList = await checkWatchlist(
         popularMovies?.results ?? [],
       );
 
@@ -72,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  Future<List<MovieModel>> _checkWatchlist(List<Results> results) async {
+  Future<List<MovieModel>> checkWatchlist(List<Results> results) async {
     List<MovieModel> movieModels = [];
     for (var result in results) {
       final bool isWatchList =
@@ -85,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _loadPopularMovies();
+    loadMovies();
   }
 
   @override
@@ -101,7 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           SearchTextFormFieldWidget(
             controller: controller,
-            onChanged: (value) => _onSearch(value),
+            onChanged: (value) => onSearch(value),
           ),
           const SizedBox(height: 16),
           isLoading

@@ -108,49 +108,49 @@ class DetailsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["adult"] = adult;
-    _data["backdrop_path"] = backdropPath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["adult"] = adult;
+    data["backdrop_path"] = backdropPath;
     if (belongsToCollection != null) {
-      _data["belongs_to_collection"] = belongsToCollection?.toJson();
+      data["belongs_to_collection"] = belongsToCollection?.toJson();
     }
-    _data["budget"] = budget;
+    data["budget"] = budget;
     if (genres != null) {
-      _data["genres"] = genres?.map((e) => e.toJson()).toList();
+      data["genres"] = genres?.map((e) => e.toJson()).toList();
     }
-    _data["homepage"] = homepage;
-    _data["id"] = id;
-    _data["imdb_id"] = imdbId;
+    data["homepage"] = homepage;
+    data["id"] = id;
+    data["imdb_id"] = imdbId;
     if (originCountry != null) {
-      _data["origin_country"] = originCountry;
+      data["origin_country"] = originCountry;
     }
-    _data["original_language"] = originalLanguage;
-    _data["original_title"] = originalTitle;
-    _data["overview"] = overview;
-    _data["popularity"] = popularity;
-    _data["poster_path"] = posterPath;
+    data["original_language"] = originalLanguage;
+    data["original_title"] = originalTitle;
+    data["overview"] = overview;
+    data["popularity"] = popularity;
+    data["poster_path"] = posterPath;
     if (productionCompanies != null) {
-      _data["production_companies"] =
+      data["production_companies"] =
           productionCompanies?.map((e) => e.toJson()).toList();
     }
     if (productionCountries != null) {
-      _data["production_countries"] =
+      data["production_countries"] =
           productionCountries?.map((e) => e.toJson()).toList();
     }
-    _data["release_date"] = releaseDate;
-    _data["revenue"] = revenue;
-    _data["runtime"] = runtime;
+    data["release_date"] = releaseDate;
+    data["revenue"] = revenue;
+    data["runtime"] = runtime;
     if (spokenLanguages != null) {
-      _data["spoken_languages"] =
+      data["spoken_languages"] =
           spokenLanguages?.map((e) => e.toJson()).toList();
     }
-    _data["status"] = status;
-    _data["tagline"] = tagline;
-    _data["title"] = title;
-    _data["video"] = video;
-    _data["vote_average"] = voteAverage;
-    _data["vote_count"] = voteCount;
-    return _data;
+    data["status"] = status;
+    data["tagline"] = tagline;
+    data["title"] = title;
+    data["video"] = video;
+    data["vote_average"] = voteAverage;
+    data["vote_count"] = voteCount;
+    return data;
   }
 }
 
@@ -172,11 +172,11 @@ class SpokenLanguages {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["english_name"] = englishName;
-    _data["iso_639_1"] = iso6391;
-    _data["name"] = name;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["english_name"] = englishName;
+    data["iso_639_1"] = iso6391;
+    data["name"] = name;
+    return data;
   }
 }
 
@@ -196,10 +196,10 @@ class ProductionCountries {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["iso_3166_1"] = iso31661;
-    _data["name"] = name;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["iso_3166_1"] = iso31661;
+    data["name"] = name;
+    return data;
   }
 }
 
@@ -223,12 +223,12 @@ class ProductionCompanies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["id"] = id;
-    _data["logo_path"] = logoPath;
-    _data["name"] = name;
-    _data["origin_country"] = originCountry;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["logo_path"] = logoPath;
+    data["name"] = name;
+    data["origin_country"] = originCountry;
+    return data;
   }
 }
 
@@ -252,11 +252,11 @@ class BelongsToCollection {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["id"] = id;
-    _data["name"] = name;
-    _data["poster_path"] = posterPath;
-    _data["backdrop_path"] = backdropPath;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["name"] = name;
+    data["poster_path"] = posterPath;
+    data["backdrop_path"] = backdropPath;
+    return data;
   }
 }

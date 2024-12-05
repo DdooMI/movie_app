@@ -86,7 +86,7 @@ class BrowseGenresScreen extends StatelessWidget {
                       },
                       itemCount: movies.length,
                       separatorBuilder: (_, index) {
-                        return Divider();
+                        return const Divider();
                       },
                     ),
                   );

@@ -11,6 +11,7 @@ import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_gen
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/movie_details_screen.dart';
 import 'package:movie_app/screens/login_signup/login.dart';
 import 'package:movie_app/screens/login_signup/signup.dart';
+import 'package:movie_app/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
         MovieDetailsScreen.routeName: (_) => const MovieDetailsScreen()
       },
       theme: AppTheme.theme,
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }

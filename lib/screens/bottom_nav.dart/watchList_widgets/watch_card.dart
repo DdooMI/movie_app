@@ -22,7 +22,6 @@ class _WatchCardState extends State<WatchCard> {
         results!.releaseDate != null && results.releaseDate!.length >= 4
             ? results.releaseDate!.substring(0, 4)
             : "N/A";
-    ;
     final String backdropPath = results.backdropPath ?? '';
     final String originalTitle = results.originalTitle ?? 'No Title';
     final String voteAverage = results.voteAverage?.toStringAsFixed(1) ?? 'N/A';

@@ -1,11 +1,12 @@
-
 class GenresModel {
   List<Genres>? genres;
 
   GenresModel({this.genres});
 
   GenresModel.fromJson(Map<String, dynamic> json) {
-    genres = json["genres"] == null ? null : (json["genres"] as List).map((e) => Genres.fromJson(e)).toList();
+    genres = json["genres"] == null
+        ? null
+        : (json["genres"] as List).map((e) => Genres.fromJson(e)).toList();
   }
 
   static List<GenresModel> fromList(List<Map<String, dynamic>> list) {
@@ -13,11 +14,11 @@ class GenresModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    if(genres != null) {
-      _data["genres"] = genres?.map((e) => e.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (genres != null) {
+      data["genres"] = genres?.map((e) => e.toJson()).toList();
     }
-    return _data;
+    return data;
   }
 }
 
@@ -37,9 +38,9 @@ class Genres {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["id"] = id;
-    _data["name"] = name;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["name"] = name;
+    return data;
   }
 }
