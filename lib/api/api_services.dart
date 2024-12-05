@@ -132,4 +132,24 @@ class ApiServices {
       return null;
     }
   }
+
+  static Future<SlidableModel?> searchMovie(String movieTitle) async {
+    var url = Uri.https(ApiConsts.baseUrl, ApiConsts.discover, {
+      'language': 'en-US',
+      'include_adult': 'false',
+      'page': '1',
+      'query': movieTitle
+    });
+    var header = {
+      'Authorization': 'Bearer ${ApiConsts.token}',
+    };
+    var response = await http.get(url, headers: header);
+    if (response.statusCode == 200) {
+      String body = response.body;
+      var json = jsonDecode(body);
+      return SlidableModel.fromJson(json);
+    } else {
+      return null;
+    }
+  }
 }
