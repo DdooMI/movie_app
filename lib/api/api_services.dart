@@ -129,7 +129,7 @@ class ApiServices {
   }
 
   static Future<SlidableModel?> searchMovie(String movieTitle) async {
-    var url = Uri.https(ApiConsts.baseUrl, ApiConsts.discover, {
+    var url = Uri.https(ApiConsts.baseUrl, ApiConsts.search, {
       'language': 'en-US',
       'include_adult': 'false',
       'page': '1',

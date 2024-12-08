@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:movie_app/api/api_services.dart';
 import 'package:movie_app/consts/app_colors.dart';
@@ -19,38 +21,44 @@ class _SearchScreenState extends State<SearchScreen> {
   List<MovieModel> movies = [];
   bool isSearching = false;
   bool isLoading = false;
+  Timer? debounce;
 
   Future<void> onSearch(String query) async {
-    if (query.isEmpty) {
-      loadMovies();
-      return;
-    }
-
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final SlidableModel? searchResults = await ApiServices.searchMovie(query);
-      final List<MovieModel> searchMovies = await checkWatchlist(
-        searchResults?.results ?? [],
-      );
+    if (debounce?.isActive ?? false) debounce?.cancel();
+    debounce = Timer(const Duration(milliseconds: 500), () async {
+      if (query.isEmpty) {
+        loadMovies();
+        return;
+      }
 
       setState(() {
-        movies = searchMovies;
-        isLoading = false;
+        isLoading = true;
         isSearching = true;
       });
-    } catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-    }
+
+      try {
+        final SlidableModel? searchResults =
+            await ApiServices.searchMovie(query);
+        final List<MovieModel> searchMovies = await checkWatchlist(
+          searchResults?.results ?? [],
+        );
+
+        setState(() {
+          movies = searchMovies;
+          isLoading = false;
+        });
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
   }
 
   Future<void> loadMovies() async {
     setState(() {
       isLoading = true;
+      isSearching = false;
     });
 
     try {
@@ -62,7 +70,6 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() {
         movies = popularList;
         isLoading = false;
-        isSearching = false;
       });
     } catch (error) {
       setState(() {
@@ -72,19 +79,25 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<List<MovieModel>> checkWatchlist(List<Results> results) async {
-    List<MovieModel> movieModels = [];
-    for (var result in results) {
+    final List<Future<MovieModel>> movieFutures = results.map((result) async {
       final bool isWatchList =
           await FirebaseServices.existMovie(result.id.toString());
-      movieModels.add(MovieModel(results: result, isWatchList: isWatchList));
-    }
-    return movieModels;
+      return MovieModel(results: result, isWatchList: isWatchList);
+    }).toList();
+
+    return await Future.wait(movieFutures);
   }
 
   @override
   void initState() {
     super.initState();
     loadMovies();
+  }
+
+  @override
+  void dispose() {
+    debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -99,7 +112,6 @@ class _SearchScreenState extends State<SearchScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchTextFormFieldWidget(
-            controller: controller,
             onChanged: (value) => onSearch(value),
           ),
           const SizedBox(height: 16),
@@ -115,7 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Text(
                             isSearching
                                 ? "No movies found for your search."
-                                : "",
+                                : "No movies available.",
                           ),
                         )
                       : ListView.separated(
