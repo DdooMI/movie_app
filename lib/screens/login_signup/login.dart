@@ -87,11 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 await Provider.of<UserProvider>(context,
                                         listen: false)
                                     .login(emailcontroller.text,
-                                        passwordcontroller.text)
-                                    .then((value) {
+                                        passwordcontroller.text);
+                                if (Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .isSignIn) {
                                   Navigator.of(context).pushReplacementNamed(
                                       BottomNavScreen.routeName);
-                                });
+                                }
                               }
                             },
                             text: AppLocalizations.of(context)!.login),

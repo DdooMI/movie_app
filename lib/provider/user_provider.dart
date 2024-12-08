@@ -6,15 +6,18 @@ import 'package:movie_app/models/user_model.dart';
 class UserProvider extends ChangeNotifier {
   UserModel? userModel;
   bool loading = false;
+  bool isSignIn = false;
   Future login(String email, String password) async {
     try {
       loading = true;
       notifyListeners();
       userModel = await FirebaseServices.login(email, password);
       loading = false;
+      isSignIn = true;
       notifyListeners();
     } catch (e) {
       loading = false;
+      isSignIn = false;
       notifyListeners();
       Fluttertoast.showToast(
           msg: "Invalid email or password",
@@ -33,9 +36,11 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       userModel = await FirebaseServices.signup(userModel, password);
       loading = false;
+      isSignIn = true;
       notifyListeners();
     } catch (e) {
       loading = false;
+      isSignIn = false;
       notifyListeners();
       Fluttertoast.showToast(
           msg: "Invalid email or password or name",

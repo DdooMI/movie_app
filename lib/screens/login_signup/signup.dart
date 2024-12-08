@@ -51,9 +51,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     LoginTextFormFieldWidget(
                       controller: namecontroller,
                       hintText: AppLocalizations.of(context)!.name,
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: AppColors.gold,
                       ),
                       keyboardType: TextInputType.text,
                       validator: (value) {
@@ -68,9 +68,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     LoginTextFormFieldWidget(
                       controller: emailcontroller,
                       hintText: AppLocalizations.of(context)!.email,
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.email,
-                        color: Colors.white,
+                        color: AppColors.gold,
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
@@ -85,9 +85,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     LoginTextFormFieldWidget(
                       controller: passwordcontroller,
                       hintText: AppLocalizations.of(context)!.password,
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.lock,
-                        color: Colors.white,
+                        color: AppColors.gold,
                       ),
                       password: true,
                       validator: (value) {
@@ -120,11 +120,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                         UserModel(
                                             name: namecontroller.text,
                                             email: emailcontroller.text),
-                                        passwordcontroller.text)
-                                    .then((value) {
+                                        passwordcontroller.text);
+                                if (Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .isSignIn) {
                                   Navigator.of(context).pushReplacementNamed(
                                       LoginScreen.routeName);
-                                });
+                                }
                               }
                             },
                             text: AppLocalizations.of(context)!.signup),
