@@ -1,0 +1,1 @@
+C:\Users\DELL\AndroidStudioProjects\movie_app\build\app\intermediates\cxx\RelWithDebInfo\y2p6i2o1\obj\arm64-v8a
