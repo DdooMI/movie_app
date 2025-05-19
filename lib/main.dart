@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +12,6 @@ import 'package:movie_app/screens/bottom_nav.dart/browse_widgets.dart/browse_gen
 import 'package:movie_app/screens/bottom_nav.dart/home_widgets/movie_details_screen.dart';
 import 'package:movie_app/screens/login_signup/login.dart';
 import 'package:movie_app/screens/login_signup/signup.dart';
-import 'package:movie_app/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,7 +49,9 @@ class MyApp extends StatelessWidget {
         MovieDetailsScreen.routeName: (_) => const MovieDetailsScreen()
       },
       theme: AppTheme.theme,
-      home: const SplashScreen(),
+      home: (FirebaseAuth.instance.currentUser?.uid == null)
+          ? const LoginScreen()
+          : const BottomNavScreen(),
     );
   }
 }

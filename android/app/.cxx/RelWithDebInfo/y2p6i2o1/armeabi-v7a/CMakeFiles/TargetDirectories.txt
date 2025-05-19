@@ -1,0 +1,2 @@
+C:/Users/DELL/AndroidStudioProjects/movie_app/android/app/.cxx/RelWithDebInfo/y2p6i2o1/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/DELL/AndroidStudioProjects/movie_app/android/app/.cxx/RelWithDebInfo/y2p6i2o1/armeabi-v7a/CMakeFiles/rebuild_cache.dir
